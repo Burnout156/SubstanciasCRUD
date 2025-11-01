@@ -1,0 +1,49 @@
+<header class="app-navbar">
+  <div class="app-navbar__container">
+    <div class="logo" routerLink="/">
+      <div class="logo-icon">🧪</div>
+      <h1>Substâncias CRUD</h1>
+    </div>
+
+    <nav class="menu">
+      <a class="menu-item"
+         routerLink="/substancias"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }">Substâncias</a>
+
+      <a class="menu-item"
+         routerLink="/categorias"
+         routerLinkActive="active">Categorias</a>
+
+      <a class="menu-item"
+         routerLink="/propriedades"
+         routerLinkActive="active">Propriedades</a>
+    </nav>
+
+    <button class="mobile-menu-toggle"
+            type="button"
+            (click)="toggleMobile()"
+            aria-label="Abrir menu"
+            [attr.aria-expanded]="mobileOpen">
+      {{ mobileOpen ? '✕' : '☰' }}
+    </button>
+  </div>
+
+  <nav class="app-navbar__mobile" [class.active]="mobileOpen">
+    <a class="menu-item"
+       routerLink="/substancias"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }"
+       (click)="closeMobile()">Substâncias</a>
+
+    <a class="menu-item"
+       routerLink="/categorias"
+       routerLinkActive="active"
+       (click)="closeMobile()">Categorias</a>
+
+    <a class="menu-item"
+       routerLink="/propriedades"
+       routerLinkActive="active"
+       (click)="closeMobile()">Propriedades</a>
+  </nav>
+</header>

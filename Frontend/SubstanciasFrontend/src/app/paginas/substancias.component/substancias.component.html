@@ -1,0 +1,155 @@
+<div class="page-bg"></div>
+<div class="container">
+  <!-- Cabeçalho -->
+  <div class="header">
+    <h1 id="page-title">Cadastro de Substâncias</h1>
+  </div>
+
+  <div class="main-content">
+    <!-- Card: Formulário -->
+    <div class="form-card">
+      <h2 id="form-title">Nova Substância</h2>
+
+      <form (ngSubmit)="salvar()" #form="ngForm" id="substanciaForm">
+        <!-- Linha: Código / Nome -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="codigo">Código *</label>
+            <input
+              id="codigo"
+              name="codigo"
+              type="text"
+              required
+              [(ngModel)]="novaSubstancia.codigo"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="nome">Nome *</label>
+            <input
+              id="nome"
+              name="nome"
+              type="text"
+              required
+              [(ngModel)]="novaSubstancia.nome"
+            />
+          </div>
+        </div>
+
+        <!-- Categoria -->
+        <div class="form-group">
+          <label for="categoria">Categoria *</label>
+          <select
+            id="categoria"
+            name="categoriaId"
+            required
+            [(ngModel)]="novaSubstancia.categoriaId"
+          >
+            <option [ngValue]="undefined" disabled>Selecione uma categoria</option>
+            <option *ngFor="let c of categorias" [value]="c.id">
+              {{ c.nome }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Descrição -->
+        <div class="form-group">
+          <label for="descricao">Descrição</label>
+          <textarea
+            id="descricao"
+            name="descricao"
+            placeholder="Descreva as características da substância..."
+            [(ngModel)]="novaSubstancia.descricao"
+          ></textarea>
+        </div>
+
+        <!-- Notas -->
+        <div class="form-group">
+          <label for="notas">Notas</label>
+          <textarea
+            id="notas"
+            name="notas"
+            placeholder="Observações adicionais..."
+            [(ngModel)]="novaSubstancia.notas"
+          ></textarea>
+        </div>
+
+        <!-- Propriedades -->
+        <div class="properties-section">
+          <h3>Propriedades</h3>
+
+          <div class="properties-grid" id="propriedades">
+            <label
+              class="property-item"
+              *ngFor="let p of propriedades"
+              [attr.for]="'prop-'+p.id"
+            >
+              <input
+                type="checkbox"
+                class="prop-checkbox"
+                [id]="'prop-'+p.id"
+                [checked]="isChecked(p.id!)"
+                (change)="togglePropriedade(p, $event)"
+              />
+              <div>
+                <div class="property-label">{{ p.nome }}</div>
+                <div class="property-type">
+                  {{ p.valueType === 0 ? 'Boolean' : 'Decimal' }}
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Botão salvar -->
+        <button
+          id="salvarBtn"
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Salvar Substância
+        </button>
+      </form>
+    </div>
+
+    <!-- Card: Tabela -->
+    <div class="table-card">
+      <h2 id="table-title">Substâncias Cadastradas</h2>
+
+      <!-- Empty state -->
+      <div class="empty-state" *ngIf="!substancias || substancias.length === 0">
+        <div class="empty-state-icon">🧪</div>
+        <p>Nenhuma substância cadastrada ainda.</p>
+        <p>Use o formulário ao lado para adicionar a primeira substância.</p>
+      </div>
+
+      <!-- Tabela -->
+      <div class="table-container" *ngIf="substancias && substancias.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th style="width: 1%;">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of substancias; trackBy: trackById">
+              <td>{{ s.codigo }}</td>
+              <td>{{ s.nome }}</td>
+              <td>{{ getCategoriaNome(s.categoriaId, s.categoriaNome) }}</td>
+              <td>
+                <button class="btn btn-danger" type="button" (click)="deletar(s.id!)">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

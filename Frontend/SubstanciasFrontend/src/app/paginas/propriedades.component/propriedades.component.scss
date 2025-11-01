@@ -1,0 +1,124 @@
+:host {
+  display: block;
+  --primary: #667eea;
+  --secondary: #764ba2;
+  color: #2d3748;
+  min-height: 100dvh;
+}
+
+/* fundo gradiente como no mode */
+:host::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  background-attachment: fixed;
+}
+
+/* layout base */
+.container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+.header { text-align: center; margin-bottom: 3rem; }
+
+.header h1 {
+  font-size: 2.5rem; font-weight: 700; color: #fff; margin: 0;
+  text-shadow: 0 2px 4px rgba(0,0,0,.1);
+  display: flex; align-items: center; justify-content: center; gap: 1rem;
+}
+
+.header-icon {
+  font-size: 2.5rem; background: rgba(255,255,255,.2); padding: .5rem;
+  border-radius: 12px; backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.3);
+}
+
+.main-content {
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 2rem; align-items: start;
+}
+
+/* cards */
+.form-card, .table-card {
+  background: #fff; border-radius: 16px; padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1); backdrop-filter: blur(10px);
+}
+.form-card { height: fit-content; }
+
+.form-card h2, .table-card h2 {
+  font-size: 1.5rem; font-weight: 600; margin: 0 0 1.5rem 0; color: #2d3748;
+  display: flex; align-items: center; gap: .75rem;
+}
+
+.form-icon, .table-icon {
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff; padding: .5rem; border-radius: 8px;
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+}
+
+/* form */
+.form-group { margin-bottom: 1.5rem; }
+label { display: block; font-weight: 500; margin-bottom: .5rem; color: #4a5568; font-size: .875rem; }
+
+input, select {
+  width: 100%; padding: 1rem; border: 2px solid #e2e8f0; border-radius: 12px;
+  font-size: 1rem; transition: all .2s ease; background: #fff; box-sizing: border-box;
+}
+input:focus, select:focus {
+  outline: none; border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(102,126,234,.1); transform: translateY(-1px);
+}
+select { cursor: pointer; }
+
+/* buttons */
+.btn {
+  padding: 1rem 2rem; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600;
+  cursor: pointer; transition: all .2s ease; text-transform: uppercase; letter-spacing: .5px; width: 100%;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: #fff;
+  &:hover:not(:disabled){ transform: translateY(-2px); box-shadow: 0 8px 25px rgba(102,126,234,.3); }
+  &:disabled { background: #cbd5e0; cursor: not-allowed; transform: none; }
+}
+.btn-danger {
+  background: #e53e3e; color: #fff; padding: .5rem 1rem; font-size: .875rem; width: auto;
+  text-transform: none; letter-spacing: normal;
+  &:hover { background: #c53030; transform: translateY(-1px); }
+}
+
+/* tabela */
+.table-container { overflow-x: auto; border-radius: 12px; border: 1px solid #e2e8f0; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th {
+  background: #f7fafc; padding: 1rem; text-align: left; font-weight: 600;
+  color: #2d3748; border-bottom: 2px solid #e2e8f0;
+}
+td { padding: 1rem; border-bottom: 1px solid #e2e8f0; }
+tr:hover { background: #f7fafc; }
+
+/* empty */
+.empty-state { text-align: center; padding: 3rem; color: #718096; }
+.empty-state-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+/* badges + stats */
+.property-count {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  color: #fff; padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; margin-left: auto;
+}
+.type-badge { padding: .25rem .75rem; border-radius: 20px; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; }
+.type-badge.boolean { background: #3182ce; color: #fff; }
+.type-badge.decimal { background: #38a169; color: #fff; }
+
+.stats-card {
+  background: rgba(255,255,255,.1); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;
+  backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.2);
+}
+.stats-card h3 { color: #fff; margin: 0 0 .5rem 0; font-size: .875rem; text-transform: uppercase; letter-spacing: 1px; }
+.stats-number { color: #fff; font-size: 2rem; font-weight: 700; margin: 0; }
+
+/* responsivo */
+@media (max-width: 768px) {
+  .main-content { grid-template-columns: 1fr; }
+  .container { padding: 1rem; }
+  .header h1 { font-size: 2rem; flex-direction: column; gap: .5rem; }
+  .header-icon { font-size: 2rem; }
+}

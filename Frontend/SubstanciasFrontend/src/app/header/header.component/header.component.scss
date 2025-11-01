@@ -1,0 +1,202 @@
+/* ================================
+   Header moderno com “gordurinha” e pills
+   ================================ */
+
+:host {
+  display: block;
+
+  /* Variáveis do tema / espaçamento */
+  --header-h: 70px;         /* altura útil do conteúdo do header */
+  --pad-y: 12px;            /* “gordurinha” (top+bottom do header) */
+  --gutter-x: 28px;         /* padding horizontal interno do container */
+  --menu-gap: 28px;         /* espaçamento entre itens do menu */
+  --item-py: 12px;          /* padding Y dos itens (pill) */
+  --item-px: 22px;          /* padding X dos itens (pill) */
+  --radius-pill: 16px;      /* raio do pill */
+
+  --primary:   #667eea;
+  --secondary: #764ba2;
+}
+
+/* evita faixas brancas externas */
+:host, :host ::ng-deep body { margin: 0; box-sizing: border-box; }
+
+/* Barra principal (suporta .navbar OU .app-navbar) */
+.navbar,
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+
+  /* gradiente + leve blur */
+  background: linear-gradient(135deg, var(--primary, #667eea) 0%, var(--secondary, #764ba2) 100%) !important;
+  color: #fff;
+
+  /* “gordurinha” desejada */
+  padding-block: var(--pad-y);
+
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 8px 32px rgba(0,0,0,.12);
+
+  @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+}
+
+/* Container interno */
+.navbar-container,
+.app-navbar__container {
+  max-width: 1200px;                /* mantém conteúdo mais “fechado” */
+  min-height: var(--header-h);
+  margin: 0 auto;
+  padding-inline: var(--gutter-x);   /* 👈 nível de espaçamento do print */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+  h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -.3px;
+    text-shadow: 0 2px 4px rgba(0,0,0,.12);
+    white-space: nowrap;
+    user-select: none;
+  }
+}
+.logo-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 1.15rem;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.35);
+  @supports ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Menu (desktop) */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: var(--menu-gap);   /* 👈 distância entre itens igual ao print */
+}
+
+.menu-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--item-py) var(--item-px);  /* 👈 pill mais “gordinho” */
+  border-radius: var(--radius-pill);
+
+  color: rgba(255,255,255,.96);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .98rem;
+
+  border: 1px solid transparent;
+  transition: transform .15s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+
+  /* estado normal */
+  background: transparent;
+
+  /* hover: leve brilho + borda sutil */
+  &:hover {
+    background: rgba(255,255,255,.16);
+    border-color: rgba(255,255,255,.25);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  }
+
+  /* ativo: pill realçado + sublinhado branco */
+  &.active {
+    background: rgba(255,255,255,.22);
+    border-color: rgba(255,255,255,.35);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.22),
+      0 8px 22px rgba(0,0,0,.22);
+    color: #fff;
+  }
+  &.active::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: 6px;          /* 👈 distancia do sublinhado do print */
+    transform: translateX(-50%);
+    width: 76%; height: 3px;         /* 👈 largura/espessura do sublinhado */
+    background: #fff;
+    border-radius: 2px;
+    opacity: .95;
+  }
+}
+
+/* Toggle mobile */
+.mobile-menu-toggle {
+  display: none;
+  background: none; border: none; color: #fff;
+  font-size: 1.6rem; cursor: pointer;
+  padding: .5rem; border-radius: 10px;
+  transition: background .2s ease;
+  &:hover { background: rgba(255,255,255,.12); }
+}
+
+/* Menu mobile (dropdown) — mesmo look & feel */
+.mobile-menu,
+.app-navbar__mobile {
+  display: none;
+  position: absolute; left: 0; right: 0;
+  top: calc(100% + var(--pad-y));
+  padding: 10px var(--gutter-x);
+
+  background: linear-gradient(135deg, var(--primary, #667eea) 0%, var(--secondary, #764ba2) 100%) !important;
+  border-top: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 10px 32px rgba(0,0,0,.22);
+
+  &.active {
+    display: block;
+    animation: slideDown .22s ease-out;
+  }
+
+  .menu-item {
+    display: block;
+    margin-bottom: 10px;
+    &:last-child { margin-bottom: 0; }
+    &.active::after { display: none; }            /* sem sublinhado no mobile */
+    &.active { border-left: 4px solid #fff; }     /* marcação lateral no mobile */
+  }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Breakpoints */
+@media (max-width: 900px) {
+  :host { --menu-gap: 18px; --item-px: 18px; }
+}
+@media (max-width: 768px) {
+  .navbar-container, .app-navbar__container { padding-inline: 16px; }
+  .menu { display: none; }
+  .mobile-menu-toggle { display: block; }
+  .logo h1 { font-size: 1.35rem; }
+  .logo-icon { width: 36px; height: 36px; }
+}
+@media (max-width: 480px) {
+  :host { --header-h: 60px; --pad-y: 10px; }
+  .logo h1 { font-size: 1.18rem; }
+  .logo-icon { width: 32px; height: 32px; }
+}

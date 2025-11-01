@@ -1,0 +1,83 @@
+<div class="container">
+  <!-- Título / ícone -->
+  <div class="header">
+    <h1>
+      <span class="header-icon">📂</span>
+      Cadastro de Categorias
+    </h1>
+  </div>
+
+  <!-- Card de estatística -->
+  <div class="stats-card">
+    <h3>Total de Categorias</h3>
+    <p class="stats-number">{{ categorias.length }}</p>
+  </div>
+
+  <div class="main-content">
+    <!-- Card: Formulário -->
+    <div class="form-card">
+      <h2>
+        <span class="form-icon">➕</span>
+        Nova Categoria
+      </h2>
+
+      <form (ngSubmit)="salvar()" #form="ngForm" id="categoriaForm">
+        <div class="form-group">
+          <label for="nome">Nome da Categoria *</label>
+          <input
+            id="nome"
+            type="text"
+            name="nome"
+            required
+            placeholder="Digite o nome da categoria..."
+            [(ngModel)]="novaCategoria.nome"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          Salvar Categoria
+        </button>
+      </form>
+    </div>
+
+    <!-- Card: Tabela -->
+    <div class="table-card">
+      <h2>
+        <span class="table-icon">📋</span>
+        Categorias Cadastradas
+        <p class="stats-number">{{ categorias.length }}</p>
+      </h2>
+
+      <ng-container *ngIf="categorias?.length; else emptyState">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th style="width:1%;">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of categorias; trackBy: trackById">
+                <td>{{ c.nome }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger" (click)="deletar(c.id!)">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <div class="empty-state-icon">📂</div>
+          <p>Nenhuma categoria cadastrada ainda.</p>
+          <p>Use o formulário ao lado para adicionar a primeira categoria.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

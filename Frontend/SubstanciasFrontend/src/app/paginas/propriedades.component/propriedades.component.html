@@ -1,0 +1,98 @@
+<div class="container">
+  <!-- Cabeçalho -->
+  <div class="header">
+    <h1>
+      <span class="header-icon">⚙️</span>
+      <span id="page-title">Cadastro de Propriedades</span>
+    </h1>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-card">
+    <h3>Total de Propriedades</h3>
+    <p class="stats-number" id="propertyCount">{{ propriedades?.length || 0 }}</p>
+  </div>
+
+  <div class="main-content">
+    <!-- Formulário -->
+    <div class="form-card">
+      <h2><span class="form-icon">➕</span> <span id="form-title">Nova Propriedade</span></h2>
+
+      <form (ngSubmit)="salvar()" #form="ngForm" autocomplete="off" novalidate>
+        <div class="form-group">
+          <label for="nome">Nome da Propriedade *</label>
+          <input
+            id="nome"
+            name="nome"
+            type="text"
+            required
+            placeholder="Digite o nome da propriedade..."
+            [(ngModel)]="novaPropriedade.nome"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="valueType">Tipo de Valor *</label>
+          <select
+            id="valueType"
+            name="valueType"
+            required
+            [(ngModel)]="novaPropriedade.valueType"
+          >
+            <option [ngValue]="PropertyValueType.Boolean">Boolean</option>
+            <option [ngValue]="PropertyValueType.Decimal">Decimal</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">
+          <span id="button-text">Salvar Propriedade</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Tabela -->
+    <div class="table-card">
+      <h2>
+        <span class="table-icon">📋</span>
+        <span id="table-title">Propriedades Cadastradas</span>
+        <span class="property-count" id="propertyBadge">{{ propriedades?.length || 0 }}</span>
+      </h2>
+
+      <!-- Empty state -->
+      <div class="empty-state" *ngIf="!propriedades || propriedades.length === 0">
+        <div class="empty-state-icon">⚙️</div>
+        <p>Nenhuma propriedade cadastrada ainda.</p>
+        <p>Use o formulário ao lado para adicionar a primeira propriedade.</p>
+      </div>
+
+      <!-- Tabela -->
+      <div class="table-container" *ngIf="propriedades && propriedades.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th style="width:1%;">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of propriedades; trackBy: trackById">
+              <td>{{ p.nome }}</td>
+              <td>
+                <span class="type-badge" [ngClass]="getTypeBadgeClass(p.valueType)">
+                  {{ getTypeLabel(p.valueType) }}
+                </span>
+              </td>
+              <td>
+                <button class="btn btn-danger" type="button" (click)="deletar(p.id!)">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
