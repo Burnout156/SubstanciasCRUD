@@ -1,0 +1,124 @@
+###############################################################################
+# SISTEMA OPERACIONAL
+###############################################################################
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+###############################################################################
+# EDITORES / IDE
+###############################################################################
+# VSCode (mantenha o diretório fora do git; se quiser versionar, remova esta linha)
+.vscode/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.rsuser
+*.sln.docstates
+
+# ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+###############################################################################
+# LOGS / TEMP / AMBIENTE
+###############################################################################
+logs/
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.pid
+*.seed
+*.pid.lock
+tmp/
+temp/
+
+# Arquivos de ambiente (mantenha apenas um .env.example versionado)
+.env
+.env.*
+!.env.example
+.npmrc
+
+###############################################################################
+# ANGULAR / NODE (Frontend/SubstanciasFrontend)
+###############################################################################
+# Padrões genéricos para qualquer app front na árvore
+**/node_modules/
+**/dist/
+**/.angular/
+**/.cache/
+**/.parcel-cache/
+**/.eslintcache
+**/.stylelintcache
+**/.nyc_output/
+**/coverage/
+**/.npm/
+
+# Angular cache local / builders
+.angular/cache/
+
+# Lockfiles: manter versionados (package-lock.json / yarn.lock / pnpm-lock.yaml)
+# (não ignore — melhor para builds reprodutíveis)
+
+###############################################################################
+# .NET / ASP.NET (Backend/*)
+###############################################################################
+# Saídas de build
+**/bin/
+**/obj/
+**/TestResults/
+**/[Tt]est[Rr]esult*/
+**/x64/
+**/x86/
+**/.vs/
+
+# Pacotes (caso algum projeto ainda use packages/)
+**/packages/
+# (mantém .config)
+!**/packages/build/
+!**/packages/repositories.config
+
+# Arquivos de usuário / máquina
+*.user
+*.userprefs
+*.pubxml.user
+*.opendb
+*.VC.db
+
+# Artefatos de publish
+**/publish/
+**/out/
+
+# ASP.NET configs locais (evite subir segredos)
+**/appsettings.*.local.json
+**/appsettings.Local.json
+**/secrets.json
+
+# NCrunch
+*.ncrunch*
+.*crunch*.local.xml
+
+# T4 / EF sobrando
+**/*.Generated.cs
+**/*.designer.cs
+
+###############################################################################
+# DOCKER (se houver)
+###############################################################################
+docker-compose.override.yml
